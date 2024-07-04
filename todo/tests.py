@@ -98,3 +98,9 @@ class TodoViewTestCase(TestCase):
         self.assertEqual(response.templates[0].name, 'todo/index.html')
         self.assertEqual(response.context['tasks'][0], task1)
         self.assertEqual(response.context['tasks'][1], task2)
+
+    def tes_detail_get_fail(self):
+        client = Client()
+        response = client.get('/1/')
+
+        self.assertEqual(response.status_code, 404)
