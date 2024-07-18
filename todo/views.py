@@ -65,3 +65,63 @@ def close(request, task_id):
     task.completed = True
     task.save()
     return redirect(index)
+
+def index_ja(request):
+    if request.method == 'POST':
+        task = Task(title=request.POST['title'], due_at=make_aware(parse_datetime(request.POST['due_at'])))
+        task.save()
+
+    if request.GET.get('order') == 'due':
+        tasks = Task.objects.order_by('due_at')
+    else:
+        tasks = Task.objects.order_by('-posted_at')
+
+    context = {
+        'tasks': tasks
+    }
+    return render(request, 'todo/index_ja.html', context)
+
+
+def detail_ja(request, task_id):
+    try:
+        task = Task.objects.get(pk=task_id)
+    except Task.DoesNotExist:
+        raise Http404("Task does not exist")
+
+    context = {
+        'task': task,
+    }
+    return render(request, 'todo/detail_ja.html', context)
+
+def update_ja(request, task_id):
+    try:
+        task = Task.objects.get(pk=task_id)
+    except Task.DoesNotExist:
+        raise Http404("Task does not exist")
+    if request.method == 'POST':
+        task.title = request.POST['title']
+        task.due_at = make_aware(parse_datetime(request.POST['due_at']))
+        task.save()
+        return redirect(detail_ja, task_id)
+
+    context = {
+        'task': task
+    }
+    return render(request, "todo/edit_ja.html", context)
+
+def close_ja(request, task_id):
+    try:
+        task = Task.objects.get(pk=task_id)
+    except Task.DoesNotExist:
+        raise Http404("Task does not exist")
+    task.completed = True
+    task.save()
+    return redirect(index_ja)
+
+def delete_ja(request, task_id):
+    try:
+        task = Task.objects.get(pk=task_id)
+    except Task.DoesNotExist:
+        raise Http404("Task does not exist")
+    task.delete()
+    return redirect(index_ja)
