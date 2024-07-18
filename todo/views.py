@@ -3,6 +3,7 @@ from django.http import Http404
 from django.utils.timezone import make_aware
 from django.utils.dateparse import parse_datetime
 from todo.models import Task
+from django.views.generic import ListView
 
 
 # Create your views here.
@@ -65,3 +66,20 @@ def close(request, task_id):
     task.completed = True
     task.save()
     return redirect(index)
+
+class Search(ListView):
+    model = Task
+    template_name = 'todo/search.html'
+
+    def get_queryset(self):
+        query = super().get_queryset()
+        title = self.request.GET.get('title', None)
+        if title:
+            query = query.filter(title__icontains=title)
+        return query
+   
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = self.request.GET.get('title', '')
+        return context
+
