@@ -1,0 +1,8 @@
+h1 {
+    font-size: 40px;
+    text-align: center;
+    color: #ffffff; /* ソフトなダークグレー */
+    background-color: #686868; /* パステルピンク */
+    padding: 10px 0;
+    margin: 0;
+}
