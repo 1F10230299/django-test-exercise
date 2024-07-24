@@ -30,4 +30,5 @@ urlpatterns = [
     path('ja/<int:task_id>/update', todo_views.update_ja, name='update_ja'),
     path('<int:task_id>/close', todo_views.close, name='close'),
     path('ja/<int:task_id>/close', todo_views.close_ja, name='close_ja'),
+    path('search/', todo_views.Search.as_view(), name='search'),
 ]
