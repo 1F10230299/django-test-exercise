@@ -1,0 +1,19 @@
+{% block content %}
+<div class="container mt-3">
+    <h2>Search</h2>
+    <form method="GET" action="{% url 'search' %}">
+        <p><input type="text" name="title" value="{{ title }}" placeholder="Please type in the keywords here"></p>
+        <p><input type="submit" value="search"></p>
+    </form>
+
+    {% for task in tasks %}
+    <div>
+        <div>
+            <h5>title: <a href="{% url 'detail' task.id %}">{{task.title}}</a></h5>
+            <p>{{task.content|truncatechars_html:20|linebreaksbr}}</p>
+        </div>
+    </div>
+    {% endfor %}
+    <a href="{% url 'index' %}">Top</a>
+</div>
+{% endblock %}
