@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+
+  <head>
+    <title>To Do アプリケーション</title>
+    <meta charset="UTF-8">
+    <meta name="author" content="INIAD">
+  </head>
+
+  <body>
+    <h1>{{ task.title }}</h1>
+    <ul>
+      <li>投稿日: {{ task.posted_at }}</li>
+      {% if task.due_at %}
+      <li>期限: {{ task.due_at }}</li>
+      {% endif %}
+      {% if task.completed %}
+      <li>ステータス: 完了</li>
+      {% else %}
+      <li>ステータス: 未完了</li>
+      {% endif %}
+    </ul>
+
+    <div>
+      <a href="{% url 'index_ja' %}">トップ</a>
+      <a href="{% url 'delete_ja' task.id %}">削除</a>
+      <a href="{% url 'update_ja' task.id %}">編集</a>
+      <a href="{% url 'close_ja' task.id %}">完了にする</a>
+    </div>
+  </body>
+
+</html>

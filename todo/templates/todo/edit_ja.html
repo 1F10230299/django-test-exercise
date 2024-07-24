@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+
+  <head>
+    <title>To Do アプリケーション</title>
+    <meta charset="UTF-8">
+    <meta name="author" content="INIAD">
+  </head>
+
+  <body>
+    <h1>タスクを編集</h1>
+    <p>以下のフォームからタスクを編集できます。</p>
+    <form action="{% url 'update_ja' task.id%}" method="post">
+      {% csrf_token %}
+      <div>
+        <label for="titleInput">タイトル</label><br>
+        <input id="titleInput" name="title" type="text" placeholder="タイトルを入力してください" value="{{ task.title }}">
+      </div>
+      <div>
+        <label for="dueInput">期限:</label><br>
+        <input id="dueInput" name="due_at" type="datetime-local" value="{{ task.due_at |date:"Y-m-d H:i" }}">
+      </div>
+      <div>
+        <button type="submit">送信</button>
+      </div>
+    </form>
+    <br>
+  </body>
+
+</html>
